@@ -114,17 +114,7 @@ class DecimalInput {
          * ex: 1_234, 1__234  => true
          *     12_34, _1_234 => false
          */
-        if(!doubleCommaCheck(leading)){
-            return false;
-        }
-        String[] s = paddingSplit(leading);
-        for(int x = 1; x < s.length; x++){
-            if(s[x].length() % 3 != 0){
-                return false;
-            }
-        }
-        return true;
-/*
+
         StringBuilder builder = new StringBuilder(leading);
         builder.reverse();
         int count = 0;
@@ -142,19 +132,8 @@ class DecimalInput {
             }
         }
         return true;
-*/
     }
 
-    private static String[] paddingSplit(String leading){ return leading.split("[_,]"); }
-
-    private static boolean doubleCommaCheck(String leading) {
-        for(int x = 0; x < leading.length()-1; x++){
-            if(badpaddingList.contains(leading.substring(x, x+1))){
-                return false;
-            }
-        }
-        return true;
-    }
 
     private static String removePadding(String number) {
         String num = number.replaceAll(getRegexOf(PADDING2), "");
@@ -199,8 +178,5 @@ class DecimalInput {
             return DecimalInput.removeSign(s);
         }
 
-        boolean doubleCommaCheck(String s){
-            return DecimalInput.doubleCommaCheck(s);
-        }
     }
 }

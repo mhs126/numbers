@@ -6,11 +6,7 @@ import org.junit.Test;
 
 import numbers.DecimalInput.TestHook;
 
-import java.io.BufferedReader;
-
-import java.io.ByteArrayInputStream;
-
-import java.io.InputStreamReader;
+import java.io.*;
 
 import java.io.BufferedReader;
 import java.util.Optional;
@@ -182,10 +178,6 @@ public class InputTest {
         assertEquals("1.1", hook.removeSign("+1.1"));
     }
 
-    @Test
-    public void test_with_double_comma(){
-        assertFalse(hook.doubleCommaCheck("1,,111.1"));
-    }
 
     @Test
     public void test_parse_double(){
@@ -196,9 +188,17 @@ public class InputTest {
     @Test
     public void test_driver(){
         FloatingPointDriver driver = new FloatingPointDriver();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("1.0".getBytes())));
+        BufferedReader reader = new BufferedReader(new StringReader("1.0"));
+        //BufferedReader reader = new BufferedReader(new InputStreamReader(new ByteArrayInputStream("1.0".getBytes())));
         driver.runFloatingPointParser(reader);
         assertEquals(Optional.of(1.0), driver.runFloatingPointParser(reader));
+    }
+
+    @Test
+    public void test_parser_build(){
+        FloatingPointParser parser = FloatingPointParser.build(null);
+        FloatingPointParser parser2 = FloatingPointParser.build("");
+        assertEquals(parser2, parser);
     }
 
 }
